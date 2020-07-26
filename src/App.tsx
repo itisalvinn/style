@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import {TodoList} from './TodoList';
 import {AddTodoForm} from './AddTodoForm';
+import Container from '@material-ui/core/Container';
 
 const initialTodos: Todo[] = [
   {
@@ -45,11 +46,10 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <TodoList todos={todos} toggleTodo={toggleTodo}/>
-        <AddTodoForm addTodo={addTodo}/>
+        <Container className="container" maxWidth="sm">
+          <TodoList todos={todos} toggleTodo={toggleTodo}/>
+          <AddTodoForm addTodo={addTodo}/>
+        </Container>
       </header>
     </div>
   );

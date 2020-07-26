@@ -1,4 +1,6 @@
 import React from 'react';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 interface Props {
     todo: Todo;
@@ -6,6 +8,7 @@ interface Props {
 }
 
 // list {label + input}
+// need to add firebase remove functionality in the delete btn
 export const TodoListItem: React.FC<Props> = ({todo, toggleTodo}) => {
     return (
         <li>
@@ -19,7 +22,11 @@ export const TodoListItem: React.FC<Props> = ({todo, toggleTodo}) => {
                         toggleTodo(todo);
                     }} 
                 /> {' '}
-                {todo.text}        
+                {todo.text}
+                <IconButton 
+                    aria-label="delete">
+                    <DeleteIcon fontSize="large"/>
+                </IconButton>    
             </label>
         </li>
     );
