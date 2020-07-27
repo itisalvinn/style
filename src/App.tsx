@@ -4,13 +4,17 @@ import './App.css';
 import {TodoList} from './TodoList';
 import {AddTodoForm} from './AddTodoForm';
 import Container from '@material-ui/core/Container';
+import shortid from 'shortid';
 
+// some initial test data
 const initialTodos: Todo[] = [
   {
+    id: shortid.generate(),
     text: "leet code ",
     complete: false,
   },
   {
+    id: shortid.generate(),
     text: "practice for interviews",
     complete: true,
   },
@@ -22,7 +26,6 @@ function App() {
 
   // select a todo and toggle the complete prop
   // Array.map() calls provided function on every element in this array
-  // arrow function syntax => no return but sets the todo w/ newTodos
   const toggleTodo: ToggleTodo = (selectedTodo: Todo) => {
     const newTodos = todos.map(todo => {
       if (todo === selectedTodo){
@@ -38,16 +41,21 @@ function App() {
   
   // new todo 
   const addTodo: AddTodo = (text: string) => {
-    const newTodo = {text, complete: false};
+    const newTodo = {id: shortid.generate(), text, complete: false};
     setTodos([...todos, newTodo]);
   };
+
+  const deleteItem: DeleteItem = (id: string) => {
+    const removedItem = todos.filter(e => e.id != id);
+    setTodos(removedItem);
+  }
 
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <Container className="container" maxWidth="sm">
-          <TodoList todos={todos} toggleTodo={toggleTodo}/>
+          <TodoList todos={todos} toggleTodo={toggleTodo} deleteItem={deleteItem}/>
           <AddTodoForm addTodo={addTodo}/>
         </Container>
       </header>

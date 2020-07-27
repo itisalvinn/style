@@ -10,6 +10,7 @@ import {makeStyles} from '@material-ui/core/styles';
 interface Props {
     todo: Todo;
     toggleTodo: ToggleTodo;
+    deleteItem: DeleteItem;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -23,8 +24,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 // need to add firebase remove functionality in the delete btn
-export const TodoListItem: React.FC<Props> = ({todo, toggleTodo}) => {
+// add delete confirmation
+export const TodoListItem: React.FC<Props> = ({todo, toggleTodo, deleteItem}) => {
     const styles = useStyles();
+
     return (
         <ListItem style = {{textDecoration: todo.complete ? 'line-through' : undefined}}>
             <ListItemIcon>
@@ -39,7 +42,10 @@ export const TodoListItem: React.FC<Props> = ({todo, toggleTodo}) => {
             <ListItemText primary={`${todo.text}`}/>
             <IconButton 
                 aria-label="delete"
-                className={styles.deleteBtn}>
+                className={styles.deleteBtn}
+                onClick={e => {
+                    deleteItem(todo.id)
+                }}>
                 <DeleteIcon fontSize="large"/>
             </IconButton>    
         </ListItem>
