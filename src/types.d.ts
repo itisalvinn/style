@@ -5,6 +5,9 @@ interface Todo {
     complete: boolean;
 }
 
+interface Piece {
+    type: string;
+}
 type ToggleTodo = (selectedTodo: Todo) => void;
 
 type DeleteItem = (id: string) => void;

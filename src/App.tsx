@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import {TodoList} from './TodoList';
 import {AddTodoForm} from './AddTodoForm';
+import {AllPieces} from './AllPieces';
 import Container from '@material-ui/core/Container';
 import shortid from 'shortid';
 
@@ -17,6 +18,15 @@ const initialTodos: Todo[] = [
     id: shortid.generate(),
     text: "practice for interviews",
     complete: true,
+  },
+];
+
+const initialPieces: Piece[] = [
+  {
+    type: "top",
+  },
+  {
+    type: "bottom",
   },
 ];
 
@@ -39,7 +49,7 @@ function App() {
     setTodos(newTodos);
   };
   
-  // new todo 
+  // new item 
   const addTodo: AddTodo = (text: string) => {
     const newTodo = {id: shortid.generate(), text, complete: false};
     setTodos([...todos, newTodo]);
@@ -57,6 +67,7 @@ function App() {
         <Container className="container" maxWidth="sm">
           <TodoList todos={todos} toggleTodo={toggleTodo} deleteItem={deleteItem}/>
           <AddTodoForm addTodo={addTodo}/>
+          <AllPieces/>
         </Container>
       </header>
     </div>
