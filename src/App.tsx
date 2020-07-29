@@ -67,7 +67,7 @@ function App() {
         <Container className="container" maxWidth="sm">
           <TodoList todos={todos} toggleTodo={toggleTodo} deleteItem={deleteItem}/>
           <AddTodoForm addTodo={addTodo}/>
-          <AllPieces/>
+          <AllPieces todos={todos} toggleTodo={toggleTodo} deleteItem={deleteItem}/>
         </Container>
       </header>
     </div>
