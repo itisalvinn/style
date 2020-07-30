@@ -37,7 +37,6 @@ export const PiecesListItem: React.FC<Props> = ({item, toggleItem, deleteItem, t
                     className={styles.checkBox}
                     onClick={()=>{
                         toggleItem(item, type);
-                        alert(type);
                     }}
                 /> {' '}
             </ListItemIcon>

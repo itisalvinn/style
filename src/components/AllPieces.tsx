@@ -16,7 +16,7 @@ interface Props{
     type: string;
 }
 
-// a list of TodoLists (change to garment list or something later)
+// houses all piece components -- tops / bottom / outwear / hat etc.
 export const AllPieces: React.FC<Props> = ({items, toggleItem, deleteItem, addItem, type}) => {
     const [open, setOpen] = useState(true);
 
@@ -27,7 +27,7 @@ export const AllPieces: React.FC<Props> = ({items, toggleItem, deleteItem, addIt
     return (
         <List>
             <ListItem button onClick={handleClick}>
-                <ListItemText primary="top"/>
+                <ListItemText primary={type}/>
                 {open ? <ExpandMore/> : <ExpandLess/>}
             </ListItem>
             <Collapse in={!open} timeout="auto">
