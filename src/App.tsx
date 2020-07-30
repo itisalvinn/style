@@ -1,14 +1,12 @@
 import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {TodoList} from './TodoList';
-import {AddTodoForm} from './AddTodoForm';
-import {AllPieces} from './AllPieces';
+import {AllPieces} from './components/AllPieces';
 import Container from '@material-ui/core/Container';
 import shortid from 'shortid';
 
 // some initial test data
-const initialTodos: Todo[] = [
+const initialTodos: Item[] = [
   {
     id: shortid.generate(),
     text: "leet code ",
@@ -21,43 +19,39 @@ const initialTodos: Todo[] = [
   },
 ];
 
-const initialPieces: Piece[] = [
-  {
-    type: "top",
-  },
-  {
-    type: "bottom",
-  },
-];
-
 function App() {
-  // react hook
-  const [todos, setTodos] = useState(initialTodos);
+  // react hook -- removed need for initial todo
+  const [items, setItems] = useState<Item[]>([]);
+  const [tops, setTops] = useState<Item[]>([]);
+  const [bottoms, setBottoms] = useState<Item[]>([]);
+  const [hats, setHats] = useState<Item[]>([]);
 
   // select a todo and toggle the complete prop
   // Array.map() calls provided function on every element in this array
-  const toggleTodo: ToggleTodo = (selectedTodo: Todo) => {
-    const newTodos = todos.map(todo => {
-      if (todo === selectedTodo){
+  let toggleItem: ToggleItem = (selectedItem: Item, type: string) => {
+
+    let newItems = items.map(item => {
+      if (item === selectedItem){
         return {
-          ...todo,
-          complete: !todo.complete,
+          ...item,
+          complete: !item.complete,
         };
       }
-      return todo;
+      return item;
     });
-    setTodos(newTodos);
+    setItems(newItems);
   };
   
   // new item 
-  const addTodo: AddTodo = (text: string) => {
-    const newTodo = {id: shortid.generate(), text, complete: false};
-    setTodos([...todos, newTodo]);
+  let addItem: AddItem = (text: string) => {
+    let newItem = {id: shortid.generate(), text, complete: false};
+    setItems([...items, newItem]);
   };
 
-  const deleteItem: DeleteItem = (id: string) => {
-    const removedItem = todos.filter(e => e.id != id);
-    setTodos(removedItem);
+  // remove item
+  let deleteItem: DeleteItem = (id: string) => {
+    let removedItem = items.filter(e => e.id != id);
+    setItems(removedItem);
   }
 
   return (
@@ -65,9 +59,8 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <Container className="container" maxWidth="sm">
-          <TodoList todos={todos} toggleTodo={toggleTodo} deleteItem={deleteItem}/>
-          <AddTodoForm addTodo={addTodo}/>
-          <AllPieces todos={todos} toggleTodo={toggleTodo} deleteItem={deleteItem}/>
+          <AllPieces items={items} toggleItem={toggleItem} deleteItem={deleteItem} addItem={addItem} type="top"/>
+          <AllPieces items={items} toggleItem={toggleItem} deleteItem={deleteItem} addItem={addItem} type="bottom"/>
         </Container>
       </header>
     </div>

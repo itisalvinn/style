@@ -1,15 +1,16 @@
 // declaration file with only type info
-interface Todo {
+interface Item {
     id: string;
     text: string;
     complete: boolean;
 }
 
-interface Piece {
-    type: string;
+interface Pieces {
+    type?: string;
+    items: Item[];
 }
-type ToggleTodo = (selectedTodo: Todo) => void;
+type ToggleItem = (selectedTodo: Item, type: string) => void;
 
 type DeleteItem = (id: string) => void;
 
-type AddTodo = (text: string) => void;
+type AddItem = (text: string) => void;

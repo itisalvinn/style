@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 
 interface Props {
-    addTodo: AddTodo;
+    addItem: AddItem;
 }
 
-export const AddTodoForm: React.FC<Props> = ({addTodo}) => {
+export const AddTodoForm: React.FC<Props> = ({addItem}) => {
     const [text, setText] = useState('');
     return (
         <form>
@@ -20,7 +20,7 @@ export const AddTodoForm: React.FC<Props> = ({addTodo}) => {
                 onClick = {e => {
                     e.preventDefault();
                     if(text != ''){
-                        addTodo(text);
+                        addItem(text);
                     }
                     setText('')
                 }}

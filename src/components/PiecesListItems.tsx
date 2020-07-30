@@ -8,9 +8,10 @@ import ListItem from '@material-ui/core/ListItem';
 import {makeStyles} from '@material-ui/core/styles';
 
 interface Props {
-    todo: Todo;
-    toggleTodo: ToggleTodo;
+    item: Item;
+    toggleItem: ToggleItem;
     deleteItem: DeleteItem;
+    type: string;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -25,26 +26,27 @@ const useStyles = makeStyles(theme => ({
 
 // need to add firebase remove functionality in the delete btn
 // add delete confirmation
-export const TodoListItem: React.FC<Props> = ({todo, toggleTodo, deleteItem}) => {
+export const PiecesListItem: React.FC<Props> = ({item, toggleItem, deleteItem, type}) => {
     const styles = useStyles();
 
     return (
-        <ListItem style = {{textDecoration: todo.complete ? 'line-through' : undefined}}>
+        <ListItem style = {{textDecoration: item.complete ? 'line-through' : undefined}}>
             <ListItemIcon>
                 <Checkbox
-                    checked={todo.complete}
+                    checked={item.complete}
                     className={styles.checkBox}
                     onClick={()=>{
-                        toggleTodo(todo);
+                        toggleItem(item, type);
+                        alert(type);
                     }}
                 /> {' '}
             </ListItemIcon>
-            <ListItemText primary={`${todo.text}`}/>
+            <ListItemText primary={`${item.text}`}/>
             <IconButton 
                 aria-label="delete"
                 className={styles.deleteBtn}
                 onClick={e => {
-                    deleteItem(todo.id)
+                    deleteItem(item.id)
                 }}>
                 <DeleteIcon fontSize="large"/>
             </IconButton>    
