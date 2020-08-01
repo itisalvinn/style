@@ -16,7 +16,7 @@ interface Props{
     type: string;
 }
 
-// houses all piece components -- tops / bottom / outwear / hat etc.
+// houses all piece components -- top / bottom / outwear / hat etc.
 export const AllPieces: React.FC<Props> = ({items, toggleItem, deleteItem, addItem, type}) => {
     const [open, setOpen] = useState(true);
 

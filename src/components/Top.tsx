@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
 import {AllPieces} from './AllPieces';
 import shortid from 'shortid';
-
+import {itemsRef} from '../firebase';
 
 // TODO: create a base class to reuse this component for top/bottom/outerwear/hats etc.
 export const Top: React.FC = () => {
     
-      // react hook -- removed need for initial todo
     const [tops, setTops] = useState<Item[]>([]);
 
     let toggleItem: ToggleItem = (selectedItem: Item, type: string) => {
@@ -20,18 +19,33 @@ export const Top: React.FC = () => {
           }
           return item;
         });
+
         setTops(newItems);
       };
       
       // new item 
       let addItem: AddItem = (text: string) => {
         let newItem = {id: shortid.generate(), text, complete: false};
+        itemsRef.push(newItem);
         setTops([...tops, newItem]);
       };
     
-      // remove item
+      // remove item -- need to fix id targetting ... 
       let deleteItem: DeleteItem = (id: string) => {
+        let removeId = tops.find(e => e.id === id)?.id!;
         let removedItem = tops.filter(e => e.id != id);
+
+        // firebase snapshot is always a list, even if there is only a single match
+        const query = itemsRef.orderByChild("id").equalTo(removeId);
+        query.once('value', function(snapshot){
+          snapshot.forEach(function(childSnapshot){
+            var childKey = childSnapshot.key;
+            if(childKey){
+              itemsRef.child(childKey).remove();
+            }
+          });
+        });
+
         setTops(removedItem);
       }
 
