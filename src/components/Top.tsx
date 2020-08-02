@@ -4,10 +4,12 @@ import shortid from 'shortid';
 import {itemsRef} from '../firebase';
 
 // TODO: create a base class to reuse this component for top/bottom/outerwear/hats etc.
+// TODO: add functionality to retrieve existing items in the database
 export const Top: React.FC = () => {
     
     const [tops, setTops] = useState<Item[]>([]);
 
+    // toggle checkbox
     let toggleItem: ToggleItem = (selectedItem: Item, type: string) => {
 
         let newItems = tops.map(item => {
@@ -18,6 +20,21 @@ export const Top: React.FC = () => {
             };
           }
           return item;
+        });
+        
+        // update checkbox in db
+        const query = itemsRef.orderByChild("id").equalTo(selectedItem.id);
+        query.once('value', function(snapshot){
+          snapshot.forEach(function(childSnapshot){
+            var childKey = childSnapshot.key;
+            console.log(childKey);
+            if(childKey){
+              itemsRef.set(newItems);
+            }
+            else{
+              throw new Error("unable to delete target item by id");
+            }
+          });
         });
 
         setTops(newItems);
@@ -30,18 +47,22 @@ export const Top: React.FC = () => {
         setTops([...tops, newItem]);
       };
     
-      // remove item -- need to fix id targetting ... 
+      // remove item
       let deleteItem: DeleteItem = (id: string) => {
         let removeId = tops.find(e => e.id === id)?.id!;
         let removedItem = tops.filter(e => e.id != id);
 
         // firebase snapshot is always a list, even if there is only a single match
+        // query based on id to be removed, then access the snapshot and remove it
         const query = itemsRef.orderByChild("id").equalTo(removeId);
         query.once('value', function(snapshot){
           snapshot.forEach(function(childSnapshot){
             var childKey = childSnapshot.key;
             if(childKey){
               itemsRef.child(childKey).remove();
+            }
+            else{
+              throw new Error("unable to find target item by id");
             }
           });
         });
