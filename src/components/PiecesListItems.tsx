@@ -24,7 +24,6 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-// need to add firebase remove functionality in the delete btn
 // add delete confirmation
 export const PiecesListItem: React.FC<Props> = ({item, toggleItem, deleteItem, type}) => {
     const styles = useStyles();

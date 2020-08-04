@@ -1,14 +1,30 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {AllPieces} from './AllPieces';
 import shortid from 'shortid';
 import {databaseRef} from '../firebase';
 
 // TODO: create a base class to reuse this component for top/bottom/outerwear/hats etc.
-// TODO: add functionality to retrieve existing items in the database
+// TODO: potentially fix issue where ref.push ID is overwritten with array index values on ref.set
 export const Top: React.FC = () => {
     
     const [tops, setTops] = useState<Item[]>([]);
     const topRef = databaseRef.ref('top/')
+
+    // retrieve existing tops data from db
+    useEffect(() => {
+      topRef.on('value', (snapshot) => {
+        let items = snapshot.val();
+        let newState = [];
+        for (let item in items){
+          newState.push({
+            id: items[item].id,
+            complete: items[item].complete,
+            text: items[item].text
+          });
+        }
+        setTops(newState);
+      });
+    },[])
 
     // toggle checkbox
     let toggleItem: ToggleItem = (selectedItem: Item, type: string) => {
@@ -22,7 +38,7 @@ export const Top: React.FC = () => {
           }
           return item;
         });
-        
+
         // update checkbox in db
         const query = topRef.orderByChild("id").equalTo(selectedItem.id);
         query.once('value', function(snapshot){
@@ -43,7 +59,6 @@ export const Top: React.FC = () => {
       // new item 
       let addItem: AddItem = (text: string) => {
         let newItem = {id: shortid.generate(), text, complete: false};
-        // itemsRef.push(newItem);
         topRef.push(newItem);
         setTops([...tops, newItem]);
       };
