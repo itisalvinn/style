@@ -3,16 +3,17 @@ import {AllPieces} from './AllPieces';
 import shortid from 'shortid';
 import {databaseRef} from '../firebase';
 
-// TODO: create a base class to reuse this component for top/bottom/outerwear/hats etc.
+// TODO: create a base class to reuse this component/functions for top/bottom/outerwear/hats etc.
 // TODO: potentially fix issue where ref.push ID is overwritten with array index values on ref.set
 export const Top: React.FC = () => {
     
     const [tops, setTops] = useState<Item[]>([]);
     const topRef = databaseRef.ref('top/')
 
-    // retrieve existing tops data from db
+    // retrieve existing top data from db
     useEffect(() => {
       topRef.on('value', (snapshot) => {
+        // snapshot.val() will be an array of existing tops objects 
         let items = snapshot.val();
         let newState = [];
         for (let item in items){
