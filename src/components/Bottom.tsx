@@ -86,6 +86,6 @@ export const Bottom: React.FC = () => {
       }
 
     return(
-        <AllPieces items={bottoms} toggleItem={toggleItem} deleteItem={deleteItem} addItem={addItem} type="Bottom"/>
+        <AllPieces items={bottoms} toggleItem={toggleItem} deleteItem={deleteItem} addItem={addItem} type="Bottoms"/>
     );
 };
