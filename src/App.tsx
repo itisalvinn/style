@@ -1,5 +1,5 @@
 import React from 'react';
-import style from './style.png';
+import style from './images/style.png';
 import './App.css';
 import Container from '@material-ui/core/Container';
 import {Top} from './components/Top';
@@ -9,11 +9,10 @@ import {Shoes} from './components/Shoes';
 
 function App() {
 
-  // TODO: create new logo thing
   return (
     <div className="App">
       <header className="App-header">
-        <img src={style}/>
+        <img src={style} className="App-logo"/>
         <Container className="container" maxWidth="sm">
           <Hat/>
           <Top/>
@@ -21,6 +20,9 @@ function App() {
           <Shoes/>
         </Container>
       </header>
+      <a>
+        created by alvin 
+      </a>
     </div>
   );
 }
