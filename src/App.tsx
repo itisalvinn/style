@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
+import style from './style.png';
 import './App.css';
 import Container from '@material-ui/core/Container';
 import {Top} from './components/Top';
@@ -13,7 +13,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src={style}/>
         <Container className="container" maxWidth="sm">
           <Hat/>
           <Top/>
