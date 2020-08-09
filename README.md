@@ -1,5 +1,5 @@
 ## Style
-Simple shopping list app categorized by common articles of clothing: hats, tops, bottoms, and shoes.
+Categorize your shopping list by common articles of clothing: hats, tops, bottoms, and shoes.
 
 Built using:
 
